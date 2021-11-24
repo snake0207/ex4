@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,19 +15,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       title: 'My App',
-      home: const MyHomePage(),
+      home: const FirstPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('카카고',
+        title: const Text('1st Page',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             )),
@@ -39,6 +41,17 @@ class MyHomePage extends StatelessWidget {
             icon: const Icon(Icons.logout),
           )
         ],
+      ),
+      body: Center(
+        child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.grey[300],
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SecondPage()));
+            },
+            child: const Text('Go to the 2th page ->')),
       ),
       drawer: Drawer(
         elevation: 16.0,
@@ -102,4 +115,37 @@ class MyHomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('2st Page'),
+        centerTitle: true,
+      ),
+      body: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.amber[400],
+          ),
+          onPressed: () {
+            // debugPrint('pressed back button 1st page');
+            Navigator.pop(context);
+          },
+          child: const Text('Back to the 1st Page ->')),
+    );
+  }
+}
+
+void showToast() {
+  Fluttertoast.showToast(
+    msg: 'Toast msg display',
+    backgroundColor: Colors.grey.shade600,
+    textColor: Colors.white,
+    gravity: ToastGravity.TOP_RIGHT,
+    toastLength: Toast.LENGTH_LONG,
+  );
 }
